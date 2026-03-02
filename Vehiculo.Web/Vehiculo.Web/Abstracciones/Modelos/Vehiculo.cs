@@ -1,4 +1,5 @@
 ﻿
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Abstracciones.Modelos
@@ -22,10 +23,12 @@ namespace Abstracciones.Modelos
 
         [Required(ErrorMessage = "La correo placa es requerida")]
         [EmailAddress(ErrorMessage = "El formato del correo no es válido")]
+        [DisplayName("Correo del propietario")]
         public string CorreoPropietario { get; set; }
 
         [Required(ErrorMessage = "La propiedad teléfono es requerida")]
         [Phone(ErrorMessage = "El formato del teléfono no es válido")]
+        [DisplayName("Teléfono del propietario")]
         public string TelefonoPropietario { get; set; }
     }
     public class VehiculoRequest : VehiculoBase
