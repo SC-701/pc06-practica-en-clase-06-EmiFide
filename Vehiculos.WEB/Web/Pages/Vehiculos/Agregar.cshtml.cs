@@ -14,6 +14,7 @@ namespace Web.Pages.Vehiculos
     {
         private IConfiguracion _configuracion;
         [BindProperty]
+
         public VehiculoRequest vehiculo { get; set; } = default!;
         [BindProperty]
         public List<SelectListItem> marcas { get; set; } = default!;
