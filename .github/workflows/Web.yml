@@ -12,14 +12,14 @@ name: Build and deploy Web App
 
 env:
   AZURE_WEBAPP_NAME: websc07    # Change this to your Azure Web App name
-  AZURE_WEBAPP_PACKAGE_PATH: './Vehiculo.Web/Vehiculo.Web/Web'
+  AZURE_WEBAPP_PACKAGE_PATH: '.Vehiculos.WEB/Web'
   DOTNET_VERSION: '8.0'
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - 'Vehiculo.Web/Vehiculo.Web/**'
+      - 'Vehiculos.WEB/**'
   workflow_dispatch:
 
 permissions:
@@ -46,19 +46,19 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Restore dependencies
-        run: dotnet restore "Vehiculo.Web/Vehiculo.Web/Vehiculo.Web.slnx"
+        run: dotnet restore "Vehiculos.WEB/Vehiculos.WEB.sln"
 
       - name: Build with dotnet
         run: |
-          dotnet build "Vehiculo.Web/Vehiculo.Web/Abstracciones/*.csproj" --configuration Release --no-restore
-          dotnet build "Vehiculo.Web/Vehiculo.Web/Web/*.csproj" --configuration Release --no-restore
-          dotnet build "Vehiculo.Web/Vehiculo.Web/Reglas/*.csproj" --configuration Release --no-restore
+          dotnet build "Vehiculos.WEB/Abstracciones/*.csproj" --configuration Release --no-restore
+          dotnet build "Vehiculos.WEB/Web/*.csproj" --configuration Release --no-restore
+          dotnet build "Vehiculos.WEB/Reglas/*.csproj" --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test "Vehiculo.Web/Vehiculo.Web/Vehiculo.Web.slnx" --no-restore --verbosity normal --configuration Release || echo "No tests found or test execution failed"
+        run: dotnet test "Vehiculos.WEB/Vehiculos.WEB.sln" --no-restore --verbosity normal --configuration Release || echo "No tests found or test execution failed"
 
       - name: dotnet publish
-        run: dotnet publish "Vehiculo.Web/Vehiculo.Web/Web/*.csproj" -c Release -o ./publish --no-restore
+        run: dotnet publish "Vehiculos.WEB/Web/*.csproj" -c Release -o ./publish --no-restore
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
