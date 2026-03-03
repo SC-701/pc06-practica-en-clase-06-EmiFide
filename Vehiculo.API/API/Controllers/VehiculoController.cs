@@ -30,7 +30,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Agregar([FromRoute] VehiculoRequest vehiculo)
+        public async Task<IActionResult> Agregar([FromBody] VehiculoRequest vehiculo)
         {
             var resultado = await _vehiculoFlujo.Agregar(vehiculo);
             return CreatedAtAction(nameof(Obtener), new { Id = resultado }, null);
