@@ -21,16 +21,24 @@ namespace Web.Pages.Vehiculos
         public async Task OnGet()
         {
             string endpoint = _configuracion.ObtenerMetodo("ApiEndPoints", "ObtenerVehiculos");
-            var cliente= new HttpClient();
-            var solicitud= new HttpRequestMessage(HttpMethod.Get,endpoint);
-            
-            var respuesta = await cliente.SendAsync(solicitud);
-            respuesta.EnsureSuccessStatusCode();
+
+            var cliente = new HttpClient();
+            var respuesta = await cliente.GetAsync(endpoint);
+
             if (respuesta.StatusCode == HttpStatusCode.OK)
             {
-                var resultado=await respuesta.Content.ReadAsStringAsync();
-                var opciones=new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var resultado = await respuesta.Content.ReadAsStringAsync();
+
+                var opciones = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
                 vehiculos = JsonSerializer.Deserialize<List<VehiculoResponse>>(resultado, opciones);
+            }
+            else if (respuesta.StatusCode == HttpStatusCode.NoContent)
+            {
+                vehiculos = new List<VehiculoResponse>();
             }
         }
     }
