@@ -41,7 +41,13 @@ namespace Web.Pages.Vehiculos
             var cliente = new HttpClient();
 
             var respuesta = await cliente.PostAsJsonAsync(endpoint, vehiculo);
-            respuesta.EnsureSuccessStatusCode();
+            Console.WriteLine($"Status: {respuesta.StatusCode}");
+
+            if (!respuesta.IsSuccessStatusCode)
+            {
+                var error = await respuesta.Content.ReadAsStringAsync();
+                Console.WriteLine(error);
+            }
             return RedirectToPage("./Index");
         }
 
